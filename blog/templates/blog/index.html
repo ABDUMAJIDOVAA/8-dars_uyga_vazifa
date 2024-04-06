@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ block.super }}: Retsept sahifasi
+{% endblock title %}
+
+{% block main %}
+<h1 class="mt-5 mb-5">Maqolalar ro'yxati</h1>
+
+<div class="d-flex justify-content-between">
+    <div class="col-3">
+        <div class="list-group list-group-light" style="border: 1px solid black;">
+            {% for category in categories %}
+            <a href="{% url 'bolim' category.pk %}" class="list-group-item list-group-item-action px-3 border-0">
+                {{ category.title }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-8">
+        {% for post in posts %}
+        <div class="card text-center">
+            <div class="card-header">{{ post.category }}</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content|truncatewords:15 }}</p>
+                <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary" data-mdb-ripple-init>Batafsil o'qish</a>
+            </div>
+            <div class="card-footer text-muted">{{ post.created }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock main %}
